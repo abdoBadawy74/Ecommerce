@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  Drawer,
   IconButton,
   ListItemIcon,
   ListItemText,
@@ -20,7 +21,15 @@ import {
   ElectricBikeOutlined,
   LaptopChromebookOutlined,
   MenuBookOutlined,
+  Close,
 } from "@mui/icons-material";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 
 export default function ToggleBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -33,6 +42,23 @@ export default function ToggleBar() {
   };
 
   const theme = useTheme();
+  const [state, setState] = useState({
+    top: true,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
 
   return (
     <Container
@@ -81,15 +107,13 @@ export default function ToggleBar() {
             "aria-labelledby": "basic-button",
           }}
           sx={{
-            
             ".MuiPaper-root": {
               width: "222px",
               // @ts-ignore
               bgcolor: theme.palette.myColor.main,
-            }
+            },
           }}
         >
-          
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <ElectricBikeOutlined fontSize="small" />
@@ -115,12 +139,106 @@ export default function ToggleBar() {
             </ListItemIcon>
             <ListItemText>Games</ListItemText>
           </MenuItem>
-          
         </Menu>
       </Box>
-      <IconButton>
+      <IconButton onClick={toggleDrawer("top", true)}>
         <MenuIcon />
       </IconButton>
+      <Drawer
+        anchor={"top"}
+        open={state["top"]}
+        onClose={toggleDrawer("top", false)}
+        sx={{
+          ".MuiPaper-root.MuiDrawer-paperAnchorTop": {
+            height: "100%",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            width: 444,
+            mx: "auto",
+            mt: 6,
+            position: "relative",
+            pt: 10,
+          }}
+        >
+          <IconButton
+            onClick={toggleDrawer("top", false)}
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+            }}
+          >
+            <Close />
+          </IconButton>
+
+          {[
+            {
+              mainLink: "Home",
+              subLink: ["Link 1 ", "Link 2", "Link 3"],
+            },
+            {
+              mainLink: "Mega Menu",
+              subLink: ["Link 1 ", "Link 2", "Link 3"],
+            },
+            {
+              mainLink: "Pages",
+              subLink: ["Link 1 ", "Link 2", "Link 3"],
+            },
+            {
+              mainLink: "Full Screen Menu",
+              subLink: ["Link 1 ", "Link 2", "Link 3"],
+            },
+            {
+              mainLink: "User Account",
+              subLink: ["Link 1 ", "Link 2", "Link 3"],
+            },
+            {
+              mainLink: "Vendor Account",
+              subLink: ["Link 1 ", "Link 2", "Link 3"],
+            },
+          ].map((item, index) => (
+            <Accordion
+              key={index}
+              elevation={0}
+              sx={{
+                bgcolor: "transparent",
+              }}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header"
+              >
+                {item.mainLink}
+              </AccordionSummary>
+
+              <List
+                sx={{
+                  py: 0,
+                  my: 0,
+                }}
+              >
+                {item.subLink.map((subItem, index) => (
+                  <ListItem
+                    key={index}
+                    sx={{
+                      py: 0,
+                      my: 0,
+                    }}
+                  >
+                    <ListItemButton>
+                      <ListItemText primary={subItem} />
+                    </ListItemButton>
+                  </ListItem>
+                ))}
+              </List>
+            </Accordion>
+          ))}
+        </Box>
+      </Drawer>
     </Container>
   );
 }
