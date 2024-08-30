@@ -25,7 +25,6 @@ import {
 } from "@mui/icons-material";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -43,7 +42,7 @@ export default function ToggleBar() {
 
   const theme = useTheme();
   const [state, setState] = useState({
-    top: true,
+    top: false,
     left: false,
     bottom: false,
     right: false,
@@ -166,9 +165,14 @@ export default function ToggleBar() {
           <IconButton
             onClick={toggleDrawer("top", false)}
             sx={{
+              ":hover": {
+                transform: "rotate(180deg)",
+                color: "red",
+                transition: "transform 0.3s",
+              },
               position: "absolute",
               top: 0,
-              right: 0,
+              right: 10,
             }}
           >
             <Close />
