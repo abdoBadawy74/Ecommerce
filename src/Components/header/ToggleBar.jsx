@@ -7,6 +7,7 @@ import {
   ListItemText,
   Typography,
   useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { useState } from "react";
 import Button from "@mui/material/Button";
@@ -29,6 +30,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
+import Links from "./Links";
 
 export default function ToggleBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -65,6 +67,7 @@ export default function ToggleBar() {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        mt: 5,
       }}
     >
       <Box>
@@ -140,9 +143,13 @@ export default function ToggleBar() {
           </MenuItem>
         </Menu>
       </Box>
-      <IconButton onClick={toggleDrawer("top", true)}>
-        <MenuIcon />
-      </IconButton>
+      <Links/>
+      {useMediaQuery("(max-width: 1000px)") && (
+        <IconButton onClick={toggleDrawer("top", true)}>
+          <MenuIcon />
+        </IconButton>
+      )}
+
       <Drawer
         anchor={"top"}
         open={state["top"]}
