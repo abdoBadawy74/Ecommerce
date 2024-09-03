@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";

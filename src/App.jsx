@@ -8,8 +8,14 @@ function App() {
   const [theme, colorMode] = useMode();
   return (
     <>
-      <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
+      <ColorModeContext.Provider
+        // @ts-ignore
+        value={colorMode}
+      >
+        <ThemeProvider
+          // @ts-ignore
+          theme={theme}
+        >
           <CssBaseline />
           <TopBar />
           <SearchBar />
